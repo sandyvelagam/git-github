@@ -1,0 +1,93 @@
+{
+  "Filter Agency Records": {
+    "action": "filter",
+    "parameters": {
+      "filter": "IsAgency:EQ:TRUE",
+      "source": "ID Agency Records"
+    }
+  },
+  "Load Account": {
+    "action": "sfdcDigest",
+    "parameters": {
+      "fields": [
+        {
+          "name": "AccountNumber"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "Phone"
+        },
+        {
+          "name": "ShippingCity"
+        },
+        {
+          "name": "ShippingCountry"
+        },
+        {
+          "name": "ShippingState"
+        },
+        {
+          "name": "ShippingStreet"
+        },
+        {
+          "name": "ShippingPostalCode"
+        }
+      ],
+      "object": "Account"
+    }
+  },
+  "Create Seed Bank Agencies": {
+    "action": "sfdcRegister",
+    "parameters": {
+      "name": "Seed Bank Agencies",
+      "alias": "seed_bank_agencies",
+      "source": "Filter Agency Records"
+    }
+  },
+  "Add Agency Fields": {
+    "action": "augment",
+    "parameters": {
+      "right_key": [
+        "AccountNumber"
+      ],
+      "left": "Load Account",
+      "left_key": [
+        "AccountNumber"
+      ],
+      "right_select": [
+        "Acres",
+        "Currency",
+        "Latitude",
+        "Longitude",
+        "Region",
+        "SubRegion"
+      ],
+      "right": "Load Agency Detail",
+      "relationship": "AgencyDetail",
+      "operation": "LookupSingleValue"
+    }
+  },
+  "Load Agency Detail": {
+    "action": "edgemart",
+    "parameters": {
+      "alias": "Agency_Detail"
+    }
+  },
+  "ID Agency Records": {
+    "action": "computeExpression",
+    "parameters": {
+      "source": "Add Agency Fields",
+      "mergeWithSource": true,
+      "computedFields": [
+        {
+          "name": "IsAgency",
+          "saqlExpression": "case when Phone is not null then \"TRUE\" else \"FALSE\" end\n",
+          "label": "IsAgency",
+          "type": "Text"
+        }
+      ]
+    }
+  }
+}
