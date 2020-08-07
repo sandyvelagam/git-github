@@ -1,0 +1,5 @@
+Formatting and Whitespace
+
+Formatting and whitespace issues are some of the more frustrating and subtle problems that many developers encounter when collaborating, especially cross-platform. 
+It’s very easy for patches or other collaborated work to introduce subtle whitespace changes because editors silently introduce them, and if your files ever touch a Windows system, their line endings might be replaced. 
+Git has a few configuration options to help with these issues.

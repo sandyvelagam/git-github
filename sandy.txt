@@ -1,0 +1,6 @@
+Sandeep velagam first git 
+The file will have its original line endings in your working directory. warning: LF will be replaced by CRLF in Gemfile.
+
+The file will have its original line endings in your working directory. warning: LF will be replaced by CRLF in Gemfile.lock.
+
+The file will have its original line endings in your working directory. warning: LF will be replaced by CRLF in README.
